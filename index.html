@@ -40,7 +40,7 @@
 <body>
     <div id="episodeTitle"></div>
     <label for="season">Choose season: </label>
-    <select id="sezon">
+    <select id="season">
         <option value="1">Season 1</option>
         <option value="2">Season 2</option>
         <option value="3">Season 3</option>
@@ -63,14 +63,14 @@
             .then(response => response.json())
             .then(data => {
                 episodes = data;
+                let selectedEpisode = pickRandomEpisode();
+                document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + " (" + selectedEpisode.title + ")?";
             })
             .catch(error => {
                 console.error("Error while reading JSON file:", error);
             });
 
-        let selectedEpisode = pickRandomEpisode();
-        document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + " (" + selectedEpisode.title + ")?";
-
+        
         function pickRandomEpisode() {
             return episodes[Math.floor(Math.random() * episodes.length)];
         }
