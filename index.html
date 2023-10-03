@@ -95,7 +95,7 @@
           
         function initializeGame() {
             selectedEpisode = pickRandomEpisode();
-            document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + "\n(" + selectedEpisode.title + ")?";
+            document.getElementById('episodeTitle').innerText = "Which season:<br>" + selectedEpisode.title_english + "<br>(" + selectedEpisode.title + ")";
         }
         function pickRandomEpisode() {
             return episodes[Math.floor(Math.random() * episodes.length)];
