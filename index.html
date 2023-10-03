@@ -85,14 +85,16 @@
             .then(response => response.json())
             .then(data => {
                 episodes = data;
+                initializeGame();
             })
             .catch(error => {
                 console.error("Error while reading JSON file:", error);
             });
-        let selectedEpisode = pickRandomEpisode();
-        document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + " (" + selectedEpisode.title + ")?";
-            
-        
+          
+        function initializeGame() {
+            selectedEpisode = pickRandomEpisode();
+            document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + "?";
+        }
         function pickRandomEpisode() {
             return episodes[Math.floor(Math.random() * episodes.length)];
         }
@@ -109,9 +111,7 @@
         }
 
         function resetQuestion() {
-            selectedEpisode = pickRandomEpisode();
-            document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title + "?";
-            document.getElementById('season').value = "1";
+            initializeGame()
             const result = document.getElementById('result');
             result.innerText = ""; 
         }
