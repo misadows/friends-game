@@ -26,20 +26,27 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+        #seasonButtons {
+            display: flex;               /* makes its children sit in a row */
+            flex-wrap: nowrap;           /* prevent wrapping */
+            justify-content: center;     /* center the buttons */
+        }
         .seasonButton {
             margin: 5px;
             padding: 8px 16px;
             font-size: 15px;
             border: none;
-            background-color: #f39c12;  /* jasnopomarańczowy, ale możesz dostosować kolor */
+            background-color: #f39c12; 
             color: white;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-left: 5px;
+            margin-right: 5px;
         }
         
         .seasonButton:hover {
-            background-color: #e67e22; /* ciemniejszy pomarańczowy */
+            background-color: #e67e22; 
         }
 
         button:hover {
@@ -54,16 +61,19 @@
 </head>
 <body>
     <div id="episodeTitle"></div>
-    <button class="seasonButton" onclick="checkAnswer(1)">1</button>
-    <button class="seasonButton" onclick="checkAnswer(2)">2</button>
-    <button class="seasonButton" onclick="checkAnswer(3)">3</button>
-    <button class="seasonButton" onclick="checkAnswer(4)">4</button>
-    <button class="seasonButton" onclick="checkAnswer(5)">5</button>
-    <button class="seasonButton" onclick="checkAnswer(6)">6</button>
-    <button class="seasonButton" onclick="checkAnswer(7)">7</button>
-    <button class="seasonButton" onclick="checkAnswer(8)">8</button>
-    <button class="seasonButton" onclick="checkAnswer(9)">9</button>
-    <button class="seasonButton" onclick="checkAnswer(10)">10</button>
+    <div id="seasonButtons">
+
+        <button class="seasonButton" onclick="checkAnswer(1)">1</button>
+        <button class="seasonButton" onclick="checkAnswer(2)">2</button>
+        <button class="seasonButton" onclick="checkAnswer(3)">3</button>
+        <button class="seasonButton" onclick="checkAnswer(4)">4</button>
+        <button class="seasonButton" onclick="checkAnswer(5)">5</button>
+        <button class="seasonButton" onclick="checkAnswer(6)">6</button>
+        <button class="seasonButton" onclick="checkAnswer(7)">7</button>
+        <button class="seasonButton" onclick="checkAnswer(8)">8</button>
+        <button class="seasonButton" onclick="checkAnswer(9)">9</button>
+        <button class="seasonButton" onclick="checkAnswer(10)">10</button>
+    </div>
     
     <!--<button onclick="resetQuestion()">New Question</button> -->
     <div id="result"></div>
@@ -75,13 +85,13 @@
             .then(response => response.json())
             .then(data => {
                 episodes = data;
-                let selectedEpisode = pickRandomEpisode();
-                document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + " (" + selectedEpisode.title + ")?";
             })
             .catch(error => {
                 console.error("Error while reading JSON file:", error);
             });
-
+        let selectedEpisode = pickRandomEpisode();
+        document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title_english + " (" + selectedEpisode.title + ")?";
+            
         
         function pickRandomEpisode() {
             return episodes[Math.floor(Math.random() * episodes.length)];
