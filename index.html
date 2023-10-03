@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz o serialu Friends</title>
+    <title>Friends Series Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,63 +31,58 @@
             background-color: #0056b3;
         }
 
-        #wynik {
+        #result {
             margin-top: 20px;
             font-size: 24px;
         }
     </style>
 </head>
 <body>
-    <div id="odcinek"></div>
-    <label for="sezon">Wybierz sezon: </label>
-    <select id="sezon">
-        <option value="1">Sezon 1</option>
-        <option value="2">Sezon 2</option>
-        <option value="3">Sezon 3</option>
-        <option value="4">Sezon 4</option>
-        <option value="5">Sezon 5</option>
-        <option value="6">Sezon 6</option>
-        <option value="7">Sezon 7</option>
-        <option value="8">Sezon 8</option>
-        <option value="9">Sezon 9</option>
-        <option value="10">Sezon 10</option>
+    <div id="episodeTitle"></div>
+    <label for="season">Choose season: </label>
+    <select id="season">
+        <!-- ... your season options ... -->
     </select>
-    <button onclick="sprawdzOdpowiedz()">Sprawdź</button>
-    <button onclick="resetujPytanie()">Nowe pytanie</button>
-
-    <div id="wynik"></div>
+    <button onclick="checkAnswer()">Check</button>
+    <button onclick="resetQuestion()">New Question</button>
+    <div id="result"></div>
 
     <script>
-        const odcinki = [
-            { tytul: "Pilot", sezon: 1 },
-            { tytul: "The One with the Monkey", sezon: 1 },
-            // ... [Dodaj inne odcinki] ...
-            { tytul: "The Last One", sezon: 10 }
-        ];
+        let episodes = [];
 
-        let wybranyOdcinek = losujOdcinek();
-        document.getElementById('odcinek').innerText = "Jaki sezon: " + wybranyOdcinek.tytul + "?";
+        fetch('friends-episodes.json')
+            .then(response => response.json())
+            .then(data => {
+                episodes = data;
+            })
+            .catch(error => {
+                console.error("Error while reading JSON file:", error);
+            });
 
-        function losujOdcinek() {
-            return odcinki[Math.floor(Math.random() * odcinki.length)];
+        let selectedEpisode = pickRandomEpisode();
+        document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.english_title + " (" + selectedEpisode.title + ")?";
+
+        function pickRandomEpisode() {
+            return episodes[Math.floor(Math.random() * episodes.length)];
         }
 
-        function sprawdzOdpowiedz() {
-            const sezonUzytkownika = parseInt(document.getElementById('sezon').value);
-            const wynik = document.getElementById('wynik');
+        function checkAnswer() {
+            const userSeason = parseInt(document.getElementById('season').value);
+            const result = document.getElementById('result');
 
-            if (sezonUzytkownika === wybranyOdcinek.sezon) {
-                wynik.innerText = "Dobrze! To jest sezon " + wybranyOdcinek.sezon + "!";
+            if (userSeason === selectedEpisode.season) {
+                result.innerText = "Correct! It's season " + selectedEpisode.season + "!";
             } else {
-                wynik.innerText = "Niestety, źle. Poprawna odpowiedź to sezon " + wybranyOdcinek.sezon + ".";
+                result.innerText = "Unfortunately, wrong. The correct answer is season " + selectedEpisode.season + ".";
             }
         }
-        function resetujPytanie() {
-            wybranyOdcinek = losujOdcinek();
-            document.getElementById('odcinek').innerText = "Jaki sezon: " + wybranyOdcinek.tytul + "?";
-            document.getElementById('sezon').value = "1";
-            const wynik = document.getElementById('wynik');
-            wynik.innerText = ""; 
+
+        function resetQuestion() {
+            selectedEpisode = pickRandomEpisode();
+            document.getElementById('episodeTitle').innerText = "Which season: " + selectedEpisode.title + "?";
+            document.getElementById('season').value = "1";
+            const result = document.getElementById('result');
+            result.innerText = ""; 
         }
     </script>
 </body>
