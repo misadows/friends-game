@@ -43,10 +43,18 @@
     <select id="sezon">
         <option value="1">Sezon 1</option>
         <option value="2">Sezon 2</option>
-        <!-- ... [Dodaj wszystkie sezony] ... -->
+        <option value="3">Sezon 3</option>
+        <option value="4">Sezon 4</option>
+        <option value="5">Sezon 5</option>
+        <option value="6">Sezon 6</option>
+        <option value="7">Sezon 7</option>
+        <option value="8">Sezon 8</option>
+        <option value="9">Sezon 9</option>
         <option value="10">Sezon 10</option>
     </select>
     <button onclick="sprawdzOdpowiedz()">Sprawdź</button>
+    <button onclick="resetujPytanie()">Nowe pytanie</button>
+
     <div id="wynik"></div>
 
     <script>
@@ -73,6 +81,13 @@
             } else {
                 wynik.innerText = "Niestety, źle. Poprawna odpowiedź to sezon " + wybranyOdcinek.sezon + ".";
             }
+        }
+        function resetujPytanie() {
+            wybranyOdcinek = losujOdcinek();
+            document.getElementById('odcinek').innerText = "Jaki sezon: " + wybranyOdcinek.tytul + "?";
+            document.getElementById('sezon').value = "1";
+            const wynik = document.getElementById('wynik');
+            wynik.innerText = ""; 
         }
     </script>
 </body>
