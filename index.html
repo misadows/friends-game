@@ -3,30 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papier, Nożyce, Kamień</title>
+    <title>Quiz o serialu Friends</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #wynik {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-    <button onclick="game('papier')">Papier</button>
-    <button onclick="game('nożyce')">Nożyce</button>
-    <button onclick="game('kamień')">Kamień</button>
+    <div id="odcinek"></div>
+    <label for="sezon">Wybierz sezon: </label>
+    <select id="sezon">
+        <option value="1">Sezon 1</option>
+        <option value="2">Sezon 2</option>
+        <!-- ... [Dodaj wszystkie sezony] ... -->
+        <option value="10">Sezon 10</option>
+    </select>
+    <button onclick="sprawdzOdpowiedz()">Sprawdź</button>
     <div id="wynik"></div>
 
     <script>
-        function game(choice) {
-            const choices = ['papier', 'nożyce', 'kamień'];
-            const computerChoice = choices[Math.floor(Math.random() * 3)];
-            const result = document.getElementById('wynik');
+        const odcinki = [
+            { tytul: "Pilot", sezon: 1 },
+            { tytul: "The One with the Monkey", sezon: 1 },
+            // ... [Dodaj inne odcinki] ...
+            { tytul: "The Last One", sezon: 10 }
+        ];
 
-            if (choice == computerChoice) {
-                result.innerText = 'Remis!';
-            } else if (
-                (choice == 'papier' && computerChoice == 'kamień') ||
-                (choice == 'nożyce' && computerChoice == 'papier') ||
-                (choice == 'kamień' && computerChoice == 'nożyce')
-            ) {
-                result.innerText = 'Wygrałeś!';
+        let wybranyOdcinek = losujOdcinek();
+        document.getElementById('odcinek').innerText = "Jaki sezon: " + wybranyOdcinek.tytul + "?";
+
+        function losujOdcinek() {
+            return odcinki[Math.floor(Math.random() * odcinki.length)];
+        }
+
+        function sprawdzOdpowiedz() {
+            const sezonUzytkownika = parseInt(document.getElementById('sezon').value);
+            const wynik = document.getElementById('wynik');
+
+            if (sezonUzytkownika === wybranyOdcinek.sezon) {
+                wynik.innerText = "Dobrze! To jest sezon " + wybranyOdcinek.sezon + "!";
             } else {
-                result.innerText = 'Przegrałeś!';
+                wynik.innerText = "Niestety, źle. Poprawna odpowiedź to sezon " + wybranyOdcinek.sezon + ".";
             }
         }
     </script>
