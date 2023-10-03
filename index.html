@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papier, Nożyce, Kamień</title>
+</head>
+<body>
+    <button onclick="game('papier')">Papier</button>
+    <button onclick="game('nożyce')">Nożyce</button>
+    <button onclick="game('kamień')">Kamień</button>
+    <div id="wynik"></div>
+
+    <script>
+        function game(choice) {
+            const choices = ['papier', 'nożyce', 'kamień'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const result = document.getElementById('wynik');
+
+            if (choice == computerChoice) {
+                result.innerText = 'Remis!';
+            } else if (
+                (choice == 'papier' && computerChoice == 'kamień') ||
+                (choice == 'nożyce' && computerChoice == 'papier') ||
+                (choice == 'kamień' && computerChoice == 'nożyce')
+            ) {
+                result.innerText = 'Wygrałeś!';
+            } else {
+                result.innerText = 'Przegrałeś!';
+            }
+        }
+    </script>
+</body>
+</html>
